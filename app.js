@@ -81,6 +81,15 @@ app.post('/todos/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// 使用者刪除資料的路由
+app.post('/todos/:id/delete', (req, res) => {
+  const id = req.params.id
+  Todo.findById(id)
+    .then(todo => todo.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 // 設定 port 3000
 app.listen(post, () => {
   console.log(`App is running on http://localhost:${post}`)
