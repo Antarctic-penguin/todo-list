@@ -3,7 +3,7 @@ const router = express.Router()          // 準備引入路由模組
 const Todo = require('../../models/todo')   // 引用 Todo model
 
 // 新增資料的頁面
-router.get('/todos/new', (req, res) => {
+router.get('/new', (req, res) => {
   res.render('new')
 })
 // 使用者新增資料後處理路由
