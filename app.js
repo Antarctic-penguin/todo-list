@@ -6,7 +6,7 @@ const methodOverride = require('method-override')
 
 const routes = require('./routes')
 require('./config/mongoose')
-const post = 3000
+const PORT = process.env.PORT || 3000
 
 const app = express()
 
@@ -19,6 +19,6 @@ app.use(methodOverride('_method'))
 app.use(routes)
 
 // 設定 port 3000
-app.listen(post, () => {
-  console.log(`App is running on http://localhost:${post}`)
+app.listen(PORT, () => {
+  console.log(`App is running on http://localhost:${PORT}`)
 })
