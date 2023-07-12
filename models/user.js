@@ -10,8 +10,12 @@ const userSchema = new Schema({
     required: true
   },
   password: {
+    type: String,
+    required: true
+  },
+  createdAt: {
     type: Date,
     default: Date.now
   }
 })
-module.exports = mongoose.modelNames('User', userSchema)
+module.exports = mongoose.model('User', userSchema)
