@@ -1,6 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const Todo = require('../../models/todo')
+const User = require('../models/user')
 module.exports = app => {
   // 初始化 Passport 模組
   app.use(passport.initialize())
