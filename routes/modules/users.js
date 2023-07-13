@@ -1,6 +1,7 @@
 const express = require('express')        // 引用 Express 與 Express 路由器
 const router = express.Router()          // 準備引入路由模組
 const User = require('../../models/user')   // 引用 user model
+const passport = require('passport')     // 引用 passport
 
 // 登錄頁路由
 router.get('/login', (req, res) => {
@@ -8,8 +9,11 @@ router.get('/login', (req, res) => {
 })
 
 // 登錄路由
-router.post('/login', (req, res) => {
-})
+// 加入 middleware，驗證 request 登入狀態
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/users/login'
+}))
 
 // 註冊頁路由
 router.get('/register', (req, res) => {
