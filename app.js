@@ -22,9 +22,19 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+
 // 呼叫 usePassport 函式並傳入 app，這條要寫在路由之前
 usePassport(app)
 
+// 用app.use 代表這組 middleware 會作用於所有的路由
+app.use((req, res, next) => {
+  console.log(req.user)
+  // 把 req.isAuthenticated() 回傳的布林值，交接給 res 使用
+  res.locals.isAuthenticated = req.isAuthenticated()
+  // 把使用者資料交接給 res 使用
+  res.locals.user = req.user
+  next()
+})
 
 // 路由
 app.use(routes)
