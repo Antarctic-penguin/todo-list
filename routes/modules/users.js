@@ -2,6 +2,7 @@ const express = require('express')        // 引用 Express 與 Express 路由�
 const router = express.Router()          // 準備引入路由模組
 const User = require('../../models/user')   // 引用 user model
 const passport = require('passport')     // 引用 passport
+const bcrypt = require('bcryptjs')  // 載入套件
 
 // 登錄頁路由
 router.get('/login', (req, res) => {
@@ -31,9 +32,6 @@ router.post('/register', (req, res) => {
   if (password !== confirmPassword) {
     errors.push({ message: '密碼與確認密碼不相符！' })
   }
-  if (errors.length) {
-    return res.render('register', { errors, name, email, password, confirmPassword })
-  }
   // 檢查使用者是否已經註冊
   User.findOne({ email }).then(user => {
     // 如果已經註冊：退回原本畫面
@@ -41,8 +39,14 @@ router.post('/register', (req, res) => {
       errors.push({ message: '這個 Email 已經註冊過了。' })
       return res.render('register', { errors, name, email, password, confirmPassword })
     }
-    // 如果還沒註冊：寫入資料庫
-    return User.create({ name, email, password })
+    if (errors.length) {
+      return res.render('register', { errors, name, email, password, confirmPassword })
+    }
+    // 如果還沒註冊，將使用者密碼加密並寫入資料庫
+    return bcrypt
+      .genSalt(10)   //產生「鹽」，並設定複雜度係數為 10
+      .then(salt => bcrypt.hash(password, salt)) //為使用者密碼「加鹽」，產生雜湊值
+      .then(hash => User.create({ name, email, password: hash }))
       .then(() => res.redirect('/'))
       .catch(err => console.log(err))
   })
