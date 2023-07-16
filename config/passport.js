@@ -26,7 +26,7 @@ module.exports = app => {
       .catch(err => done(err, false))
   }))
 
-  // FB登錄
+  // 一般登錄
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
