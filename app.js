@@ -5,6 +5,9 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')   // 引用套件
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 // 載入passport設定檔，要寫在 express-session 以後
 const usePassport = require('./config/passport')
 
