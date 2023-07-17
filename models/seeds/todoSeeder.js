@@ -12,11 +12,6 @@ const SEED_USER = {
   password: '12345678'
 }
 db.once('open', () => {
-  for (let i = 0; i < 10; i++) {
-    Todo.create({ name: 'name-' + i })
-  }
-
-  console.log('done')
   bcrypt
     .genSalt(10)
     .then(salt => bcrypt.hash(SEED_USER.password, salt))
